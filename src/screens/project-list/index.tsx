@@ -1,4 +1,4 @@
-import qs from "qs";
+import * as qs from "qs";
 import React, { useEffect, useState }  from "react";
 import { cleanObject, useDebounce, useMount } from "utils";
 import { List } from "./list";
@@ -14,7 +14,7 @@ export const ProjectListScreen = () => {
         personId: ''
     });
 
-    const debouncedParam = useDebounce(param, 2000);
+    const debouncedParam = useDebounce(param, 200);
     const [list, setList] = useState([]);
 
     useEffect(() => {

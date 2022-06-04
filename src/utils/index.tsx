@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value) => value === 0 ? false : !value;
+export const isFalsy = (value: any) => value === 0 ? false : !value;
 
 // 在一個函數裡，改變傳入的物件(對象)本身是不好的
-export const cleanObject = (object: any) => {
+export const cleanObject = (object: object) => {
     const result = { ...object }; // 等同於 Object.assign({}, object)
 
-    Object.keys(result).forEach(key => {
-        // 要排除0的狀況
-        const value = result[key];
-        //檢查value
-        if(isFalsy(value))
+    Object.keys(result).forEach((key: string) => {
+        // @ts-ignore
+        const value = result[key]; // 要排除0的狀況
+        
+        if(isFalsy(value)) //檢查value
+            // @ts-ignore
             delete result[key];
     });
 
@@ -18,7 +19,7 @@ export const cleanObject = (object: any) => {
 }
 
 // 自訂義Hook
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
     useEffect(() => {
         callback();
     }, []);
@@ -38,7 +39,7 @@ const debounce = (func, delay) => {
     }
 }
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: any, delay?: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
