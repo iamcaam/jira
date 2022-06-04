@@ -1,6 +1,6 @@
 import qs from "qs";
 import React, { useEffect, useState }  from "react";
-import { cleanObject } from "utils";
+import { cleanObject, useDebounce, useMount } from "utils";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 
@@ -14,26 +14,26 @@ export const ProjectListScreen = () => {
         personId: ''
     });
 
+    const debouncedParam = useDebounce(param, 2000);
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        const reqUrl = `${apiUrl}/projects?${qs.stringify(cleanObject(param))}`;
-        console.log(reqUrl);
+        const reqUrl = `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`;
         fetch(reqUrl).then(async response => {
             if(response.ok) {
                 setList(await response.json());
             }
         });
-     }, [param]);
+     }, [debouncedParam]);
 
      // users只需要被執行一次就好
-     useEffect(() => {
+     useMount(() => {
         fetch(`${apiUrl}/users`).then(async response => {
-            if(response.ok) {
+            if (response.ok) {
                 setUsers(await response.json());
             }
         });
-     }, []);
+     });
 
 
     return (
