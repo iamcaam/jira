@@ -39,7 +39,7 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
                     {
                         // users有用到map所以要加key
                         // users.map((user: Users) => <option key={user.id} value={user.id}>{user.name}</option>)
-                        users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
+                        users.map((user: User) => <option key={user.id} value={user.id}>{user.name}</option>)
                     }                    
                 </select>
             </div>

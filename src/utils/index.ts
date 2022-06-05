@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value: any) => value === 0 ? false : !value;
+export const isFalsy = (value: unknown): boolean => value === 0 ? false : !value;
 
 // 在一個函數裡，改變傳入的物件(對象)本身是不好的
 export const cleanObject = (object: object) => {
@@ -39,7 +39,8 @@ const debounce = (func, delay) => {
     }
 }
 
-export const useDebounce = (value: any, delay?: number) => {
+// 後面用泛型規範類型
+export const useDebounce = <V>(value: V, delay?: number) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
